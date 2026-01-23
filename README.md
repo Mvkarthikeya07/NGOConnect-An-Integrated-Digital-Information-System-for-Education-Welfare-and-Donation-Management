@@ -145,5 +145,11 @@ NGOConnect presents a structured and extensible digital solution for managing NG
 
 ---
 
+📜 License
+
+This project is released under the MIT License and is intended strictly for academic and educational purposes.
+
+---
+
 © 2026 NGOConnect
 Developed for Academic and Educational Purposes
