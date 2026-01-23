@@ -1,4 +1,5 @@
-# NGOConnect An Integrated Digital Information System for Education, Welfare, and Donation Management in Non-Governmental Organizations
+# NGOConnect
+## An Integrated Digital Information System for Education, Welfare, and Donation Management in Non-Governmental Organizations
 
 NGOConnect is a **web-based, integrated information system** designed to digitally organize and streamline the core operational activities of Non-Governmental Organizations (NGOs). The system replaces fragmented and manual record-keeping practices with a **centralized, secure, and extensible platform** for managing beneficiaries, volunteers, and donations.
 
