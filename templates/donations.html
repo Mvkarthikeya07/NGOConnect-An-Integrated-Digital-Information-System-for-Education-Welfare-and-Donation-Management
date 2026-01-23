@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Donations</h2>
+
+<div class="panel">
+<form method="post" class="form">
+    <input name="donor" placeholder="Donor Name" required>
+    <input name="amount" placeholder="Amount" required>
+    <input name="purpose" placeholder="Purpose" required>
+    <button>Add</button>
+</form>
+</div>
+
+<div class="panel">
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Donor</th>
+            <th>Amount</th>
+            <th>Purpose</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for d in data %}
+        <tr>
+            <td>{{ d[1] }}</td>
+            <td>₹ {{ d[2] }}</td>
+            <td>{{ d[3] }}</td>
+            <td>
+                <a class="delete" href="/delete-donation/{{ d[0] }}">Delete</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+
+{% endblock %}

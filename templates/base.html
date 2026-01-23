@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NGO Management System</title>
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+
+<div class="layout">
+    <aside class="sidebar">
+        <h2>NGO</h2>
+
+        <!-- ROUTES MUST MATCH app.py -->
+        <a href="/dashboard">Dashboard</a>
+        <a href="/beneficiaries">Beneficiaries</a>
+        <a href="/volunteers">Volunteers</a>
+        <a href="/donations">Donations</a>
+
+        <!-- Logout goes back to login page -->
+        <a href="/">Logout</a>
+    </aside>
+
+    <main class="main">
+        <header class="topbar">
+            <h3>NGO Management Dashboard</h3>
+        </header>
+
+        <section class="content">
+            {% block content %}{% endblock %}
+        </section>
+    </main>
+</div>
+
+</body>
+</html>

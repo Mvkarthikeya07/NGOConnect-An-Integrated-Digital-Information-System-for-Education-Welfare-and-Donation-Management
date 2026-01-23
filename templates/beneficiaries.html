@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Beneficiaries</h2>
+
+<div class="panel">
+<form method="post" class="form">
+    <input name="name" placeholder="Name" required>
+    <input name="age" placeholder="Age" required>
+    <input name="education" placeholder="Education" required>
+    <input name="support" placeholder="Support Type" required>
+    <button>Add</button>
+</form>
+</div>
+
+<div class="panel">
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Education</th>
+            <th>Support</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for b in data %}
+        <tr>
+            <td>{{ b[1] }}</td>
+            <td>{{ b[2] }}</td>
+            <td>{{ b[3] }}</td>
+            <td>{{ b[4] }}</td>
+            <td>
+                <a class="delete" href="/delete-beneficiary/{{ b[0] }}">Delete</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+
+{% endblock %}

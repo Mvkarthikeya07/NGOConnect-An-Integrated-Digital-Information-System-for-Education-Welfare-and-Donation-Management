@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Volunteers</h2>
+
+<div class="panel">
+<form method="post" class="form">
+    <input name="name" placeholder="Name" required>
+    <input name="role" placeholder="Role" required>
+    <input name="contact" placeholder="Contact" required>
+    <button>Add</button>
+</form>
+</div>
+
+<div class="panel">
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Contact</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for v in data %}
+        <tr>
+            <td>{{ v[1] }}</td>
+            <td>{{ v[2] }}</td>
+            <td>{{ v[3] }}</td>
+            <td>
+                <a class="delete" href="/delete-volunteer/{{ v[0] }}">Delete</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+
+{% endblock %}

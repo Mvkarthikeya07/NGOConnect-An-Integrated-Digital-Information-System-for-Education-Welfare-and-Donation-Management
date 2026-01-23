@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | NGOConnect</title>
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+
+<body class="login-body">
+
+<div class="login-container">
+
+    <!-- LOGIN BOX -->
+    <div id="loginBox">
+        <div class="login-header">
+            <h1>NGOConnect</h1>
+            <p>Secure Admin Login</p>
+        </div>
+
+        <form class="login-form" onsubmit="return validateLogin()">
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" id="username" value="admin" readonly>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" required>
+            </div>
+
+            <p id="loginError" style="color:red; display:none;">
+                Invalid username or password
+            </p>
+
+            <div class="login-options">
+                <a href="#" onclick="showReset()">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+    </div>
+
+    <!-- RESET PASSWORD -->
+    <div id="resetBox" style="display:none;">
+        <div class="login-header">
+            <h1>Reset Password</h1>
+            <p>Create a new password</p>
+        </div>
+
+        <form class="login-form" onsubmit="return resetPassword()">
+            <div class="input-group">
+                <label>New Password</label>
+                <input type="password" id="newPass" required>
+            </div>
+
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <input type="password" id="confirmPass" required>
+            </div>
+
+            <p id="resetError" style="color:red; display:none;">
+                Passwords do not match
+            </p>
+
+            <p id="resetSuccess" style="color:green; display:none;">
+                Password reset successful. Please login.
+            </p>
+
+            <button type="submit" class="login-btn">Update Password</button>
+
+            <div class="login-options">
+                <a href="#" onclick="showLogin()">← Back to Login</a>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<!-- LOGIN LOGIC WITH LOCAL STORAGE -->
+<script>
+/* Initialize password if not present */
+if (!localStorage.getItem("ngo_password")) {
+    localStorage.setItem("ngo_password", "admin123");
+}
+
+/* LOGIN */
+function validateLogin() {
+    const enteredPass = document.getElementById("password").value;
+    const savedPass = localStorage.getItem("ngo_password");
+
+    document.getElementById("loginError").style.display = "none";
+
+    if (enteredPass === savedPass) {
+        window.location.href = "/dashboard";
+        return false;
+    } else {
+        document.getElementById("loginError").style.display = "block";
+        return false;
+    }
+}
+
+/* SHOW RESET */
+function showReset() {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("resetBox").style.display = "block";
+}
+
+/* SHOW LOGIN */
+function showLogin() {
+    document.getElementById("resetBox").style.display = "none";
+    document.getElementById("loginBox").style.display = "block";
+    document.getElementById("loginError").style.display = "none";
+    document.getElementById("password").value = "";
+}
+
+/* RESET PASSWORD */
+function resetPassword() {
+    const newP = document.getElementById("newPass").value;
+    const confirmP = document.getElementById("confirmPass").value;
+
+    document.getElementById("resetError").style.display = "none";
+
+    if (newP !== confirmP) {
+        document.getElementById("resetError").style.display = "block";
+        return false;
+    }
+
+    localStorage.setItem("ngo_password", newP);
+    document.getElementById("resetSuccess").style.display = "block";
+
+    setTimeout(showLogin, 1200);
+    return false;
+}
+</script>
+
+</body>
+</html>
