@@ -112,8 +112,6 @@ The system is architected with **scalability and extensibility in mind**, enabli
 
 <img width="1366" height="768" alt="Screenshot (115)" src="https://github.com/user-attachments/assets/036a56e0-0416-4b1c-bccc-2ad061f4db86" />
 
-> 📁 Create a folder named `screenshots/` and place the corresponding images using the filenames shown above.
-
 ---
 
 ## 🔮 Future Enhancements
