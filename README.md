@@ -9,7 +9,7 @@
 
 <br/><br/>
 
-# 🌐 NGOConnect
+# 🌐 NGOConnect An Integrated Digital Information System for Education Welfare and Donation Management
 
 ### An Integrated Digital Information System for Education, Welfare, and Donation Management
 
