@@ -9,127 +9,207 @@
 <body class="login-body">
 
 <div class="login-container">
+    <section class="login-hero">
+        <div class="login-badge">NGO Management System</div>
+        <h1>NGOConnect</h1>
+        <p class="login-hero-text">
+            Manage beneficiaries, volunteers, and donations from one place with a simple and clean user experience.
+        </p>
 
-    <!-- LOGIN BOX -->
-    <div id="loginBox">
-        <div class="login-header">
-            <h1>NGOConnect</h1>
-            <p>Secure Admin Login</p>
+        <div class="login-highlights">
+            <div class="login-highlight-card">
+                <span class="highlight-number">01</span>
+                <div>
+                    <strong>Centralized records</strong>
+                    <p>Keep field and donor data organized for daily operations.</p>
+                </div>
+            </div>
+            <div class="login-highlight-card">
+                <span class="highlight-number">02</span>
+                <div>
+                    <strong>Quick account access</strong>
+                    <p>Sign in or create an account to move directly into the dashboard.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="login-panel">
+        <div id="loginBox" class="auth-box" style="display: {% if active_box == 'login' %}block{% else %}none{% endif %};">
+            <div class="login-header">
+                <span class="login-eyebrow">Welcome back</span>
+                <h2>Login</h2>
+                <p>Sign in to continue to your NGOConnect dashboard.</p>
+            </div>
+
+            <form class="login-form" method="post" action="/login">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your username"
+                        value="{{ form_data.get('login_username', '') }}"
+                        required
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <div class="password-field">
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        <button type="button" class="eye-btn" onclick="togglePassword('password', this)">👁</button>
+                    </div>
+                </div>
+
+                <p class="status-message status-error {% if login_error %}show-message{% endif %}">
+                    {{ login_error or 'Invalid username or password' }}
+                </p>
+
+                <p class="status-message status-success {% if signup_success or reset_success %}show-message{% endif %}">
+                    {{ signup_success or reset_success or '' }}
+                </p>
+
+                <div class="login-options">
+                    <a href="#" onclick="return showReset()">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="login-btn">Login to dashboard</button>
+            </form>
+
+            <div class="auth-switch">
+                <span>Don’t have an account?</span>
+                <a href="#" onclick="return showSignup()">Sign up</a>
+            </div>
         </div>
 
-        <form class="login-form" onsubmit="return validateLogin()">
-            <div class="input-group">
-                <label>Username</label>
-                <input type="text" id="username" value="admin" readonly>
+        <div id="resetBox" class="auth-box reset-box" style="display: {% if active_box == 'reset' %}block{% else %}none{% endif %};">
+            <div class="login-header">
+                <span class="login-eyebrow">Password recovery</span>
+                <h2>Reset password</h2>
+                <p>Create a new password for your account.</p>
             </div>
 
-            <div class="input-group">
-                <label>Password</label>
-                <input type="password" id="password" required>
-            </div>
+            <form class="login-form" method="post" action="/reset-password">
+                <div class="input-group">
+                    <label for="resetUsername">Username</label>
+                    <input
+                        type="text"
+                        id="resetUsername"
+                        name="username"
+                        placeholder="Enter your username"
+                        value="{{ form_data.get('reset_username', '') }}"
+                        required
+                    >
+                </div>
 
-            <p id="loginError" style="color:red; display:none;">
-                Invalid username or password
-            </p>
+                <div class="input-group">
+                    <label for="newPass">New Password</label>
+                    <div class="password-field">
+                        <input type="password" id="newPass" name="new_password" placeholder="Create a new password" required>
+                        <button type="button" class="eye-btn" onclick="togglePassword('newPass', this)">👁</button>
+                    </div>
+                </div>
 
-            <div class="login-options">
-                <a href="#" onclick="showReset()">Forgot Password?</a>
-            </div>
+                <div class="input-group">
+                    <label for="confirmPass">Confirm Password</label>
+                    <div class="password-field">
+                        <input type="password" id="confirmPass" name="confirm_password" placeholder="Re-enter the password" required>
+                        <button type="button" class="eye-btn" onclick="togglePassword('confirmPass', this)">👁</button>
+                    </div>
+                </div>
 
-            <button type="submit" class="login-btn">Login</button>
-        </form>
-    </div>
+                <p class="status-message status-error {% if reset_error %}show-message{% endif %}">
+                    {{ reset_error or 'Username not found or passwords do not match' }}
+                </p>
 
-    <!-- RESET PASSWORD -->
-    <div id="resetBox" style="display:none;">
-        <div class="login-header">
-            <h1>Reset Password</h1>
-            <p>Create a new password</p>
+                <button type="submit" class="login-btn">Update password</button>
+
+                <div class="login-options login-options-left">
+                    <a href="#" onclick="return showLogin()">← Back to Login</a>
+                </div>
+            </form>
         </div>
 
-        <form class="login-form" onsubmit="return resetPassword()">
-            <div class="input-group">
-                <label>New Password</label>
-                <input type="password" id="newPass" required>
+        <div id="signupBox" class="auth-box reset-box" style="display: {% if active_box == 'signup' %}block{% else %}none{% endif %};">
+            <div class="login-header">
+                <span class="login-eyebrow">Create account</span>
+                <h2>Sign up</h2>
+                <p>Create your account to start using NGOConnect.</p>
             </div>
 
-            <div class="input-group">
-                <label>Confirm Password</label>
-                <input type="password" id="confirmPass" required>
-            </div>
+            <form class="login-form" method="post" action="/signup">
+                <div class="input-group">
+                    <label for="signupUsername">Username</label>
+                    <input
+                        type="text"
+                        id="signupUsername"
+                        name="username"
+                        placeholder="Choose a username"
+                        value="{{ form_data.get('signup_username', '') }}"
+                        required
+                    >
+                </div>
 
-            <p id="resetError" style="color:red; display:none;">
-                Passwords do not match
-            </p>
+                <div class="input-group">
+                    <label for="signupPassword">Password</label>
+                    <div class="password-field">
+                        <input type="password" id="signupPassword" name="password" placeholder="Create a password" required>
+                        <button type="button" class="eye-btn" onclick="togglePassword('signupPassword', this)">👁</button>
+                    </div>
+                </div>
 
-            <p id="resetSuccess" style="color:green; display:none;">
-                Password reset successful. Please login.
-            </p>
+                <div class="input-group">
+                    <label for="signupConfirmPassword">Confirm Password</label>
+                    <div class="password-field">
+                        <input type="password" id="signupConfirmPassword" name="confirm_password" placeholder="Re-enter your password" required>
+                        <button type="button" class="eye-btn" onclick="togglePassword('signupConfirmPassword', this)">👁</button>
+                    </div>
+                </div>
 
-            <button type="submit" class="login-btn">Update Password</button>
+                <p class="status-message status-error {% if signup_error %}show-message{% endif %}">
+                    {{ signup_error or 'Please enter a username and make sure both passwords match.' }}
+                </p>
 
-            <div class="login-options">
-                <a href="#" onclick="showLogin()">← Back to Login</a>
-            </div>
-        </form>
-    </div>
+                <button type="submit" class="login-btn">Create account</button>
+
+                <div class="login-options login-options-left">
+                    <a href="#" onclick="return showLogin()">← Back to Login</a>
+                </div>
+            </form>
+        </div>
+    </section>
 
 </div>
 
-<!-- LOGIN LOGIC WITH LOCAL STORAGE -->
 <script>
-/* Initialize password if not present */
-if (!localStorage.getItem("ngo_password")) {
-    localStorage.setItem("ngo_password", "admin123");
-}
-
-/* LOGIN */
-function validateLogin() {
-    const enteredPass = document.getElementById("password").value;
-    const savedPass = localStorage.getItem("ngo_password");
-
-    document.getElementById("loginError").style.display = "none";
-
-    if (enteredPass === savedPass) {
-        window.location.href = "/dashboard";
-        return false;
-    } else {
-        document.getElementById("loginError").style.display = "block";
-        return false;
-    }
-}
-
-/* SHOW RESET */
 function showReset() {
     document.getElementById("loginBox").style.display = "none";
+    document.getElementById("signupBox").style.display = "none";
     document.getElementById("resetBox").style.display = "block";
+    return false;
 }
 
-/* SHOW LOGIN */
+function showSignup() {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("resetBox").style.display = "none";
+    document.getElementById("signupBox").style.display = "block";
+    return false;
+}
+
 function showLogin() {
     document.getElementById("resetBox").style.display = "none";
+    document.getElementById("signupBox").style.display = "none";
     document.getElementById("loginBox").style.display = "block";
-    document.getElementById("loginError").style.display = "none";
-    document.getElementById("password").value = "";
+    return false;
 }
 
-/* RESET PASSWORD */
-function resetPassword() {
-    const newP = document.getElementById("newPass").value;
-    const confirmP = document.getElementById("confirmPass").value;
-
-    document.getElementById("resetError").style.display = "none";
-
-    if (newP !== confirmP) {
-        document.getElementById("resetError").style.display = "block";
-        return false;
-    }
-
-    localStorage.setItem("ngo_password", newP);
-    document.getElementById("resetSuccess").style.display = "block";
-
-    setTimeout(showLogin, 1200);
-    return false;
+function togglePassword(inputId, button) {
+    const input = document.getElementById(inputId);
+    const isPassword = input.type === "password";
+    input.type = isPassword ? "text" : "password";
+    button.textContent = isPassword ? "Hide" : "👁";
 }
 </script>
 
