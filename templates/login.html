@@ -2,77 +2,123 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login | NGOConnect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | SRI ARAVINDA EDUCATIONAL SOCIETY NGO MANAGEMENT SYSTEM</title>
     <link rel="stylesheet" href="/static/css/dashboard.css">
 </head>
 
 <body class="login-body">
 
 <div class="login-container">
+    <section class="login-brand-panel">
+        <div class="brand-badge">NGO Platform</div>
+        <h2>SRI ARAVINDA EDUCATIONAL SOCIETY NGO MANAGEMENT SYSTEM</h2>
+        <p class="brand-copy">
+            Centralized access for education, welfare, donation, and volunteer management.
+        </p>
 
-    <!-- LOGIN BOX -->
-    <div id="loginBox">
-        <div class="login-header">
-            <h1>NGOConnect</h1>
-            <p>Secure Admin Login</p>
+        <div class="brand-highlights">
+            <div class="highlight-card">
+                <span class="highlight-number">01</span>
+                <div>
+                    <strong>Beneficiary records</strong>
+                    <p>Track people, programs, and outcomes in one place.</p>
+                </div>
+            </div>
+
+            <div class="highlight-card">
+                <span class="highlight-number">02</span>
+                <div>
+                    <strong>Donation oversight</strong>
+                    <p>Monitor support flow with a clearer operational view.</p>
+                </div>
+            </div>
+
+            <div class="highlight-card">
+                <span class="highlight-number">03</span>
+                <div>
+                    <strong>Volunteer coordination</strong>
+                    <p>Keep engagement data organized and accessible.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="login-panel">
+        <div id="loginBox">
+            <div class="login-header">
+                <span class="panel-kicker">Welcome back</span>
+                <h2>Sign in to continue</h2>
+                <p>Use the admin account to access the NGO management dashboard.</p>
+            </div>
+
+            <form class="login-form" onsubmit="return validateLogin()">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" value="admin" readonly>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <div class="password-field">
+                        <input type="password" id="password" placeholder="Enter your password" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword('password', this)">Show</button>
+                    </div>
+                </div>
+
+                <p id="loginError" class="status-message error-message" style="display:none;">
+                    Invalid username or password.
+                </p>
+
+                <div class="login-options">
+                    <span class="login-hint">Default username is fixed for this demo.</span>
+                    <a href="#" onclick="showReset(); return false;">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="login-btn">Login</button>
+            </form>
         </div>
 
-        <form class="login-form" onsubmit="return validateLogin()">
-            <div class="input-group">
-                <label>Username</label>
-                <input type="text" id="username" value="admin" readonly>
+        <div id="resetBox" style="display:none;">
+            <div class="login-header">
+                <span class="panel-kicker">Password recovery</span>
+                <h2>Reset your password</h2>
+                <p>Create a new password for the local admin login.</p>
             </div>
 
-            <div class="input-group">
-                <label>Password</label>
-                <input type="password" id="password" required>
-            </div>
+            <form class="login-form" onsubmit="return resetPassword()">
+                <div class="input-group">
+                    <label for="newPass">New Password</label>
+                    <div class="password-field">
+                        <input type="password" id="newPass" placeholder="Enter a new password" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword('newPass', this)">Show</button>
+                    </div>
+                </div>
 
-            <p id="loginError" style="color:red; display:none;">
-                Invalid username or password
-            </p>
+                <div class="input-group">
+                    <label for="confirmPass">Confirm Password</label>
+                    <div class="password-field">
+                        <input type="password" id="confirmPass" placeholder="Re-enter the new password" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword('confirmPass', this)">Show</button>
+                    </div>
+                </div>
 
-            <div class="login-options">
-                <a href="#" onclick="showReset()">Forgot Password?</a>
-            </div>
+                <p id="resetError" class="status-message error-message" style="display:none;">
+                    Passwords do not match.
+                </p>
 
-            <button type="submit" class="login-btn">Login</button>
-        </form>
-    </div>
+                <p id="resetSuccess" class="status-message success-message" style="display:none;">
+                    Password reset successful. Please login.
+                </p>
 
-    <!-- RESET PASSWORD -->
-    <div id="resetBox" style="display:none;">
-        <div class="login-header">
-            <h1>Reset Password</h1>
-            <p>Create a new password</p>
+                <button type="submit" class="login-btn">Update Password</button>
+
+                <div class="login-options login-options-left">
+                    <a href="#" onclick="showLogin(); return false;">← Back to Login</a>
+                </div>
+            </form>
         </div>
-
-        <form class="login-form" onsubmit="return resetPassword()">
-            <div class="input-group">
-                <label>New Password</label>
-                <input type="password" id="newPass" required>
-            </div>
-
-            <div class="input-group">
-                <label>Confirm Password</label>
-                <input type="password" id="confirmPass" required>
-            </div>
-
-            <p id="resetError" style="color:red; display:none;">
-                Passwords do not match
-            </p>
-
-            <p id="resetSuccess" style="color:green; display:none;">
-                Password reset successful. Please login.
-            </p>
-
-            <button type="submit" class="login-btn">Update Password</button>
-
-            <div class="login-options">
-                <a href="#" onclick="showLogin()">← Back to Login</a>
-            </div>
-        </form>
-    </div>
+    </section>
 
 </div>
 
@@ -81,6 +127,13 @@
 /* Initialize password if not present */
 if (!localStorage.getItem("ngo_password")) {
     localStorage.setItem("ngo_password", "admin123");
+}
+
+function togglePassword(fieldId, toggleBtn) {
+    const input = document.getElementById(fieldId);
+    const nextType = input.type === "password" ? "text" : "password";
+    input.type = nextType;
+    toggleBtn.textContent = nextType === "password" ? "Show" : "Hide";
 }
 
 /* LOGIN */
@@ -103,6 +156,8 @@ function validateLogin() {
 function showReset() {
     document.getElementById("loginBox").style.display = "none";
     document.getElementById("resetBox").style.display = "block";
+    document.getElementById("resetError").style.display = "none";
+    document.getElementById("resetSuccess").style.display = "none";
 }
 
 /* SHOW LOGIN */
@@ -111,6 +166,10 @@ function showLogin() {
     document.getElementById("loginBox").style.display = "block";
     document.getElementById("loginError").style.display = "none";
     document.getElementById("password").value = "";
+    document.getElementById("newPass").value = "";
+    document.getElementById("confirmPass").value = "";
+    document.getElementById("resetError").style.display = "none";
+    document.getElementById("resetSuccess").style.display = "none";
 }
 
 /* RESET PASSWORD */
